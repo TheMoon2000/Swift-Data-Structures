@@ -8,8 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		CC168E552382812300030731 /* Data_Structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC168E4B2382812300030731 /* Data_Structures.framework */; };
-		CC168E5A2382812300030731 /* Data_StructuresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC168E592382812300030731 /* Data_StructuresTests.swift */; };
+		CC168E5A2382812300030731 /* QueueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC168E592382812300030731 /* QueueTest.swift */; };
 		CC168E5C2382812300030731 /* Data_Structures.h in Headers */ = {isa = PBXBuildFile; fileRef = CC168E4E2382812300030731 /* Data_Structures.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CC168E662382816000030731 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC168E652382816000030731 /* Queue.swift */; };
+		CC493DBA239CE12D00C65D8E /* Semigroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DB9239CE12D00C65D8E /* Semigroup.swift */; };
+		CC493DBC239CE46F00C65D8E /* Monoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DBB239CE46F00C65D8E /* Monoid.swift */; };
+		CC493DBE239CE50B00C65D8E /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DBD239CE50B00C65D8E /* Group.swift */; };
+		CC493DC0239CE5C300C65D8E /* Ring.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DBF239CE5C300C65D8E /* Ring.swift */; };
+		CC493DC2239CE6BB00C65D8E /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DC1239CE6BB00C65D8E /* Field.swift */; };
+		CC493DC4239CE76400C65D8E /* Cardinality.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DC3239CE76400C65D8E /* Cardinality.swift */; };
+		CC493DC6239CE94300C65D8E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DC5239CE94300C65D8E /* Extensions.swift */; };
+		CC493DCA239CEC0B00C65D8E /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DC9239CEC0B00C65D8E /* Complex.swift */; };
+		CC493DCE239CF09000C65D8E /* ComplexTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DCD239CF09000C65D8E /* ComplexTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,8 +37,18 @@
 		CC168E4E2382812300030731 /* Data_Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Data_Structures.h; sourceTree = "<group>"; };
 		CC168E4F2382812300030731 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC168E542382812300030731 /* Data StructuresTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Data StructuresTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC168E592382812300030731 /* Data_StructuresTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_StructuresTests.swift; sourceTree = "<group>"; };
+		CC168E592382812300030731 /* QueueTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTest.swift; sourceTree = "<group>"; };
 		CC168E5B2382812300030731 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC168E652382816000030731 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		CC493DB9239CE12D00C65D8E /* Semigroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semigroup.swift; sourceTree = "<group>"; };
+		CC493DBB239CE46F00C65D8E /* Monoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monoid.swift; sourceTree = "<group>"; };
+		CC493DBD239CE50B00C65D8E /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		CC493DBF239CE5C300C65D8E /* Ring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ring.swift; sourceTree = "<group>"; };
+		CC493DC1239CE6BB00C65D8E /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		CC493DC3239CE76400C65D8E /* Cardinality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardinality.swift; sourceTree = "<group>"; };
+		CC493DC5239CE94300C65D8E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		CC493DC9239CEC0B00C65D8E /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
+		CC493DCD239CF09000C65D8E /* ComplexTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +93,8 @@
 			children = (
 				CC168E4E2382812300030731 /* Data_Structures.h */,
 				CC168E4F2382812300030731 /* Info.plist */,
+				CC168E652382816000030731 /* Queue.swift */,
+				CC493DB8239CE11400C65D8E /* Abstract Algebra */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -80,10 +102,26 @@
 		CC168E582382812300030731 /* Data StructuresTests */ = {
 			isa = PBXGroup;
 			children = (
-				CC168E592382812300030731 /* Data_StructuresTests.swift */,
+				CC493DCD239CF09000C65D8E /* ComplexTest.swift */,
+				CC168E592382812300030731 /* QueueTest.swift */,
 				CC168E5B2382812300030731 /* Info.plist */,
 			);
 			path = "Data StructuresTests";
+			sourceTree = "<group>";
+		};
+		CC493DB8239CE11400C65D8E /* Abstract Algebra */ = {
+			isa = PBXGroup;
+			children = (
+				CC493DB9239CE12D00C65D8E /* Semigroup.swift */,
+				CC493DC3239CE76400C65D8E /* Cardinality.swift */,
+				CC493DBB239CE46F00C65D8E /* Monoid.swift */,
+				CC493DBD239CE50B00C65D8E /* Group.swift */,
+				CC493DBF239CE5C300C65D8E /* Ring.swift */,
+				CC493DC1239CE6BB00C65D8E /* Field.swift */,
+				CC493DC5239CE94300C65D8E /* Extensions.swift */,
+				CC493DC9239CEC0B00C65D8E /* Complex.swift */,
+			);
+			path = "Abstract Algebra";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +186,7 @@
 				TargetAttributes = {
 					CC168E4A2382812300030731 = {
 						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1100;
 					};
 					CC168E532382812300030731 = {
 						CreatedOnToolsVersion = 11.0;
@@ -195,6 +234,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC493DC4239CE76400C65D8E /* Cardinality.swift in Sources */,
+				CC493DCA239CEC0B00C65D8E /* Complex.swift in Sources */,
+				CC493DBC239CE46F00C65D8E /* Monoid.swift in Sources */,
+				CC493DC2239CE6BB00C65D8E /* Field.swift in Sources */,
+				CC493DC6239CE94300C65D8E /* Extensions.swift in Sources */,
+				CC168E662382816000030731 /* Queue.swift in Sources */,
+				CC493DC0239CE5C300C65D8E /* Ring.swift in Sources */,
+				CC493DBA239CE12D00C65D8E /* Semigroup.swift in Sources */,
+				CC493DBE239CE50B00C65D8E /* Group.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +250,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC168E5A2382812300030731 /* Data_StructuresTests.swift in Sources */,
+				CC493DCE239CF09000C65D8E /* ComplexTest.swift in Sources */,
+				CC168E5A2382812300030731 /* QueueTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +317,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -325,7 +374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -340,6 +389,7 @@
 		CC168E602382812300030731 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = US8T2D45H8;
@@ -356,6 +406,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.themoon2000.Data-Structures";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,6 +415,7 @@
 		CC168E612382812300030731 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = US8T2D45H8;
@@ -388,6 +440,7 @@
 		CC168E632382812300030731 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = US8T2D45H8;
 				INFOPLIST_FILE = "Data StructuresTests/Info.plist";
@@ -406,6 +459,7 @@
 		CC168E642382812300030731 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = US8T2D45H8;
 				INFOPLIST_FILE = "Data StructuresTests/Info.plist";
