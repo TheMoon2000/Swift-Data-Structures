@@ -36,10 +36,11 @@ class ComplexTest: XCTestCase {
         let c3 = Complex(real: 1.25, imaginary: -0.75)
         
         XCTAssertEqual(c1.abs, c2.abs)
-        XCTAssertEqual(c1 * c1, Complex(real: 0, imaginary: 2))
-        XCTAssertEqual(c1 * c2, Complex(real: 2, imaginary: 0))
+        XCTAssertEqual(c1 * c1, 2 * .i)
+        XCTAssertTrue(c1 * c2 == 2.0)
         XCTAssertEqual(c3.abs, sqrt((c3 * c3.conjugate).real))
         XCTAssertEqual(c1 / c2, Complex(real: 0, imaginary: 1))
+        print(1 / c1, c2 / 2, c3 + 4, .i * .i, 2 * .i)
     }
 
 }

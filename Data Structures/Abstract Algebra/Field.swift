@@ -10,9 +10,9 @@ import Foundation
 
 protocol Field: RingWithUnity {
     static func / (lhs: Self, rhs: Self) -> Self
+    static var algebraicallyClosed: Bool { get }
 }
 
-
 extension Field {
-    var isCommutative: Bool { return true }
+    static var isCommutative: Bool { return true }
 }
