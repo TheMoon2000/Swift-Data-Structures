@@ -14,9 +14,9 @@ This category of improvements are extensions to the existing Swift arrays. Many 
   ```
 
   Here is a performance comparison: <br />
-  <img src="Screenshots/DoubleArrayPerformance.jpg" width="60vw" />
+  <img src="Screenshots/DoubleArrayPerformance.jpg" width="100%" />
 
-  <img src="Screenshots/DoubleArraySpeedup.jpg" width="60vw" />
+  <img src="Screenshots/DoubleArraySpeedup.jpg" width="400px" />
 
 ### Numeric Data structures
 - Complex numbers (`Complex`)
