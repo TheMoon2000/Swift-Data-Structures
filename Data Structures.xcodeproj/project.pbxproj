@@ -21,6 +21,8 @@
 		CC493DCA239CEC0B00C65D8E /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DC9239CEC0B00C65D8E /* Complex.swift */; };
 		CC493DCE239CF09000C65D8E /* ComplexTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DCD239CF09000C65D8E /* ComplexTest.swift */; };
 		CC493DD0239CFA3600C65D8E /* Rational.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DCF239CFA3600C65D8E /* Rational.swift */; };
+		CC493DD2239D004100C65D8E /* ArrayOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DD1239D004100C65D8E /* ArrayOperations.swift */; };
+		CC493DD4239D84B200C65D8E /* ArrayOperationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DD3239D84B200C65D8E /* ArrayOperationsTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		CC493DC9239CEC0B00C65D8E /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
 		CC493DCD239CF09000C65D8E /* ComplexTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexTest.swift; sourceTree = "<group>"; };
 		CC493DCF239CFA3600C65D8E /* Rational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rational.swift; sourceTree = "<group>"; };
+		CC493DD1239D004100C65D8E /* ArrayOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOperations.swift; sourceTree = "<group>"; };
+		CC493DD3239D84B200C65D8E /* ArrayOperationsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOperationsTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 		CC168E582382812300030731 /* Data StructuresTests */ = {
 			isa = PBXGroup;
 			children = (
+				CC493DD3239D84B200C65D8E /* ArrayOperationsTest.swift */,
 				CC493DCD239CF09000C65D8E /* ComplexTest.swift */,
 				CC168E592382812300030731 /* QueueTest.swift */,
 				CC168E5B2382812300030731 /* Info.plist */,
@@ -123,6 +128,7 @@
 				CC493DC5239CE94300C65D8E /* Extensions.swift */,
 				CC493DC9239CEC0B00C65D8E /* Complex.swift */,
 				CC493DCF239CFA3600C65D8E /* Rational.swift */,
+				CC493DD1239D004100C65D8E /* ArrayOperations.swift */,
 			);
 			path = "Abstract Algebra";
 			sourceTree = "<group>";
@@ -244,6 +250,7 @@
 				CC493DC6239CE94300C65D8E /* Extensions.swift in Sources */,
 				CC168E662382816000030731 /* Queue.swift in Sources */,
 				CC493DC0239CE5C300C65D8E /* Ring.swift in Sources */,
+				CC493DD2239D004100C65D8E /* ArrayOperations.swift in Sources */,
 				CC493DD0239CFA3600C65D8E /* Rational.swift in Sources */,
 				CC493DBA239CE12D00C65D8E /* Semigroup.swift in Sources */,
 				CC493DBE239CE50B00C65D8E /* Group.swift in Sources */,
@@ -254,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC493DD4239D84B200C65D8E /* ArrayOperationsTest.swift in Sources */,
 				CC493DCE239CF09000C65D8E /* ComplexTest.swift in Sources */,
 				CC168E5A2382812300030731 /* QueueTest.swift in Sources */,
 			);

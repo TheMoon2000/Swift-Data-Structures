@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 struct Complex: Equatable, CustomStringConvertible {
     
     var real: Double = 0.0
@@ -15,44 +16,15 @@ struct Complex: Equatable, CustomStringConvertible {
     
     static var algebraicallyClosed: Bool { return true }
     
-    static let zero: Complex = .init()
+    init(real: Double, imaginary: Double) {
+        self.real = real
+        self.imaginary = imaginary
+    }
+    
+    static let zero: Complex = .init(real: 0, imaginary: 0)
     static let infinity: Complex = .init(real: .infinity, imaginary: .infinity)
     static let i: Complex = .init(real: 0, imaginary: 1)
     
-    // Basic arithmetic operations
-    static func + (lhs: Complex, rhs: Complex) -> Complex {
-        return Complex(real: lhs.real + rhs.real, imaginary: lhs.imaginary + rhs.imaginary)
-    }
-    
-    static func + (lhs: Complex, rhs: Double) -> Complex {
-        return Complex(real: lhs.real + rhs, imaginary: lhs.imaginary)
-    }
-    
-    static func + (lhs: Double, rhs: Complex) -> Complex {
-        return rhs + lhs
-    }
-    
-    public static func += (lhs: inout Complex, rhs: Complex) {
-        lhs.real += rhs.real
-        lhs.imaginary += rhs.imaginary
-    }
-    
-    public static func += (lhs: inout Complex, rhs: Double) {
-        lhs.real += rhs
-    }
-    
-    static func - (lhs: Complex, rhs: Double) -> Complex {
-        return Complex(real: lhs.real - rhs, imaginary: lhs.imaginary)
-    }
-    
-    static func - (lhs: Complex, rhs: Complex) -> Complex {
-        return Complex(real: lhs.real - rhs.real, imaginary: lhs.imaginary - rhs.imaginary)
-    }
-    
-    public static func -= (lhs: inout Complex, rhs: Complex) {
-        lhs.real -= rhs.real
-        lhs.imaginary -= rhs.imaginary
-    }
     
     static func * (lhs: Complex, rhs: Complex) -> Complex {
         return Complex(real: lhs.real * rhs.real - lhs.imaginary * rhs.imaginary, imaginary: lhs.real * rhs.imaginary + lhs.imaginary * rhs.real)
@@ -112,8 +84,7 @@ struct Complex: Equatable, CustomStringConvertible {
     }
     
     var magnitude: Double { return abs }
-    
-    
+        
     var description: String {
         if imaginary == 0 {
             return real.description
@@ -126,5 +97,81 @@ struct Complex: Equatable, CustomStringConvertible {
                 return "(\(real) - \(-imaginary)i)"
             }
         }
+    }
+}
+
+extension Complex: AdditiveArithmetic {
+    
+    // Basic arithmetic operations
+       static func + (lhs: Complex, rhs: Complex) -> Complex {
+           return Complex(real: lhs.real + rhs.real, imaginary: lhs.imaginary + rhs.imaginary)
+       }
+       
+       static func + (lhs: Complex, rhs: Double) -> Complex {
+           return Complex(real: lhs.real + rhs, imaginary: lhs.imaginary)
+       }
+       
+       static func + (lhs: Double, rhs: Complex) -> Complex {
+           return rhs + lhs
+       }
+       
+       public static func += (lhs: inout Complex, rhs: Complex) {
+           lhs.real += rhs.real
+           lhs.imaginary += rhs.imaginary
+       }
+       
+       public static func += (lhs: inout Complex, rhs: Double) {
+           lhs.real += rhs
+       }
+       
+       static func - (lhs: Complex, rhs: Double) -> Complex {
+           return Complex(real: lhs.real - rhs, imaginary: lhs.imaginary)
+       }
+       
+       static func - (lhs: Complex, rhs: Complex) -> Complex {
+           return Complex(real: lhs.real - rhs.real, imaginary: lhs.imaginary - rhs.imaginary)
+       }
+       
+       public static func -= (lhs: inout Complex, rhs: Complex) {
+           lhs.real -= rhs.real
+           lhs.imaginary -= rhs.imaginary
+       }
+       
+       public static func -= (lhs: inout Complex, rhs: Double) {
+           lhs.real -= rhs
+       }
+}
+
+extension Complex: SignedNumeric {
+    
+    typealias IntegerLiteralType = Double
+    
+    init(integerLiteral value: Double) {
+        real = Double(value)
+    }
+    
+    
+    init?<T>(exactly source: T) where T : BinaryInteger {
+        real = Double(source)
+    }
+
+}
+
+extension Complex: Strideable {
+    typealias Stride = Complex
+
+    func advanced(by n: Complex.Stride) -> Complex {
+        return self + n
+    }
+    
+    func distance(to other: Complex) -> Complex.Stride {
+        return (other - self)
+    }
+}
+
+extension Complex: Hashable {
+    func hasher(into: inout Hasher) {
+        into.combine(real)
+        into.combine(imaginary)
     }
 }
