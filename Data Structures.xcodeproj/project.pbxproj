@@ -25,7 +25,7 @@
 		CC493DD0239CFA3600C65D8E /* Rational.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DCF239CFA3600C65D8E /* Rational.swift */; };
 		CC493DD4239D84B200C65D8E /* ArrayOperationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DD3239D84B200C65D8E /* ArrayOperationsTest.swift */; };
 		CC493DD6239DD01500C65D8E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CC493DD5239DD01500C65D8E /* README.md */; };
-		CC493DDA239DFBDE00C65D8E /* IntArrayOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DD9239DFBDE00C65D8E /* IntArrayOperations.swift */; };
+		CC5324E2239E627300E95378 /* IntegerArrayOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00D86B239E0E40007B997E /* IntegerArrayOperations.swift */; };
 		CF146CF8970093562BC366E8 /* Pods_Data_Structures_Data_StructuresTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038D4AD11996DFE68DBC39D0 /* Pods_Data_Structures_Data_StructuresTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,7 +70,6 @@
 		CC493DD5239DD01500C65D8E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		CC493DD7239DDE9C00C65D8E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = "/Users/jiaruishan/Desktop/Projects/Data Structures/README.md"; sourceTree = "<absolute>"; };
 		CC493DD8239DDE9E00C65D8E /* Screenshots */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Screenshots; path = "/Users/jiaruishan/Desktop/Projects/Data Structures/Screenshots"; sourceTree = "<absolute>"; };
-		CC493DD9239DFBDE00C65D8E /* IntArrayOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntArrayOperations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,7 +144,6 @@
 				CC168E652382816000030731 /* Queue.swift */,
 				CC493DD1239D004100C65D8E /* DoubleArrayOperations.swift */,
 				CC00D867239E0893007B997E /* FloatingPointArrayOps.swift */,
-				CC493DD9239DFBDE00C65D8E /* IntArrayOperations.swift */,
 				CC00D86B239E0E40007B997E /* IntegerArrayOperations.swift */,
 				CC493DB8239CE11400C65D8E /* Abstract Algebra */,
 			);
@@ -340,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC493DC4239CE76400C65D8E /* Cardinality.swift in Sources */,
+				CC5324E2239E627300E95378 /* IntegerArrayOperations.swift in Sources */,
 				CC493DCA239CEC0B00C65D8E /* Complex.swift in Sources */,
 				CC493DBC239CE46F00C65D8E /* Monoid.swift in Sources */,
 				CC493DC2239CE6BB00C65D8E /* Field.swift in Sources */,
@@ -347,7 +346,6 @@
 				CC168E662382816000030731 /* Queue.swift in Sources */,
 				CC493DC0239CE5C300C65D8E /* Ring.swift in Sources */,
 				CC493DD0239CFA3600C65D8E /* Rational.swift in Sources */,
-				CC493DDA239DFBDE00C65D8E /* IntArrayOperations.swift in Sources */,
 				CC493DBA239CE12D00C65D8E /* Semigroup.swift in Sources */,
 				CC493DBE239CE50B00C65D8E /* Group.swift in Sources */,
 				CC00D873239E59AB007B997E /* FloatingPointArrayOps.swift in Sources */,

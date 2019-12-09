@@ -1,40 +1,19 @@
 //
-//  ArrayOperations.swift
+//  IntegerArrayOperations.swift
 //  Data Structures
 //
 //  Created by Jia Rui Shan on 2019/12/8.
 //  Copyright © 2019 Calpha Dev. All rights reserved.
 //
 
-/*
- This file generalizes the extensions in the `DoubleArrayOperations.swift` file to all floating point types.
- */
-
 import Foundation
 
-infix operator ++
-infix operator •
-
-/// This is the number of elements in the array when the algorithm switches from the default `map()` function in Swift to the custom array operations.
-let cutoff = 1 << 12
-
-extension Array where Element: SignedNumeric & SIMDScalar {
-    enum VectorArithmeticType: Int {
-        case addition, subtraction, multiplication, division
-    }
+extension Array where Element: SIMDScalar & FixedWidthInteger & SignedInteger {
     
-    enum ComparisonType: Int {
-         case lessThan, greaterThan, lessThanOrEqualTo, greaterThenOrEqualTo, equal
+    enum IntegerArithmeticType: Int {
+        case addition, subtraction, multiplication, division, leftShift, rightShift
     }
-}
 
-// MARK: - Element arrays
-extension Array where Element: SIMDScalar & FloatingPoint {
-    
-    enum ScalarArithmeticType: Int {
-        case addition, subtraction, multiplication, division, squareRoot, round
-    }
-    
     static func + (lhs: Element, rhs: [Element]) -> [Element] {
         if rhs.count < cutoff {
             return rhs.map { $0 + lhs }
@@ -85,6 +64,22 @@ extension Array where Element: SIMDScalar & FloatingPoint {
     
     static func -= (lhs: inout [Element], rhs: Element) {
         lhs = lhs - rhs
+    }
+    
+    static func << (lhs: [Element], rhs: Element) -> [Element] {
+        return transform32(lhs, type: .leftShift, constant: rhs)
+    }
+    
+    static func <<= (lhs: inout [Element], rhs: Element) {
+        lhs = lhs << rhs
+    }
+    
+    static func >> (lhs: [Element], rhs: Element) -> [Element] {
+        return transform32(lhs, type: .rightShift, constant: rhs)
+    }
+    
+    static func >>= (lhs: inout [Element], rhs: Element) {
+        lhs = lhs >> rhs
     }
     
     /// Divide every element in the array by the given divisor. Please make sure that the divisor is nonzero.
@@ -151,18 +146,8 @@ extension Array where Element: SIMDScalar & FloatingPoint {
         return compare32I(lhs, rhs, type: .equal)
     }
     
-    
-    
-    var squareRoot: [Element] {
-        if count < cutoff {
-            return map { Foundation.sqrt($0) }
-        } else {
-            return .transform32(self, type: .squareRoot)
-        }
-    }
-    
     /// Not used because SIMD 32 generally has better performance.
-    static func transform16(_ array: [Element], type: ScalarArithmeticType, constant: Element = 0) -> [Element] {
+    static func transform16(_ array: [Element], type: IntegerArithmeticType, constant: Element = 0) -> [Element] {
         let cut = array.count / 16 * 16
         let C = SIMD16<Element>(repeating: constant)
         var new = Array<Element>(repeating: Element.zero, count: array.count)
@@ -184,17 +169,17 @@ extension Array where Element: SIMDScalar & FloatingPoint {
             let value: SIMD16<Element>
             switch type {
             case .addition:
-                value = slice + C
+                value = slice &+ C
             case .subtraction:
-                value = C - slice
+                value = C &- slice
             case .multiplication:
-                value = slice * C
+                value = slice &* C
             case .division:
                 value = slice / C
-            case .squareRoot:
-                value = slice.squareRoot()
-            case .round:
-                value = slice.rounded(.toNearestOrEven)
+            case .leftShift:
+                value = slice &<< C
+            case .rightShift:
+                value = slice &>> C
             }
             
             syncQueue.async {
@@ -230,10 +215,10 @@ extension Array where Element: SIMDScalar & FloatingPoint {
                     new[i] = array[i] * constant
                 case .division:
                     new[i] = array[i] / constant
-                case .squareRoot:
-                    new[i] = Foundation.sqrt(array[i])
-                case .round:
-                    new[i] = array[i].rounded(.toNearestOrEven)
+                case .leftShift:
+                    new[i] = array[i] << constant
+                case .rightShift:
+                    new[i] = array[i] >> constant
                 }
             }
             group.leave()
@@ -245,7 +230,7 @@ extension Array where Element: SIMDScalar & FloatingPoint {
     }
     
     // Apply a function to each element of a Element array.
-    static func transform32(_ array: [Element], type: ScalarArithmeticType, constant: Element = Element.zero) -> [Element] {
+    static func transform32(_ array: [Element], type: IntegerArithmeticType, constant: Element = Element.zero) -> [Element] {
         let cut = array.count / 32 * 32
         var new = [Element](repeating: Element.zero, count: array.count)
         let C = SIMD32<Element>(repeating: constant)
@@ -271,17 +256,17 @@ extension Array where Element: SIMDScalar & FloatingPoint {
             let value: SIMD32<Element>
             switch type {
             case .addition:
-                value = slice + C
+                value = slice &+ C
             case .subtraction:
-                value = C - slice
+                value = C &- slice
             case .multiplication:
-                value = slice * C
+                value = slice &* C
             case .division:
                 value = slice / C
-            case .squareRoot:
-                value = slice.squareRoot()
-            case .round:
-                value = slice.rounded(.toNearestOrEven)
+            case .leftShift:
+                value = slice &<< C
+            case .rightShift:
+                value = slice &>> C
             }
             
             syncQueue.async {
@@ -333,10 +318,10 @@ extension Array where Element: SIMDScalar & FloatingPoint {
                     new[i] = array[i] * constant
                 case .division:
                     new[i] = array[i] / constant
-                case .squareRoot:
-                    new[i] = Foundation.sqrt(array[i])
-                case .round:
-                    new[i] = array[i].rounded(.toNearestOrEven)
+                case .leftShift:
+                    new[i] = array[i] << constant
+                case .rightShift:
+                    new[i] = array[i] >> constant
                 }
             }
             group.leave()
@@ -411,11 +396,11 @@ extension Array where Element: SIMDScalar & FloatingPoint {
             let value: SIMD32<Element>
             switch type {
             case .addition:
-                value = vec1 + vec2
+                value = vec1 &+ vec2
             case .subtraction:
-                value = vec1 - vec2
+                value = vec1 &- vec2
             case .multiplication:
-                value = vec1 * vec2
+                value = vec1 &* vec2
             case .division:
                 value = vec1 / vec2
             }
@@ -699,7 +684,7 @@ extension Array where Element: SIMDScalar & FloatingPoint {
             )
             
             syncQueue.async {
-                sumVector += slice
+                sumVector &+= slice
                 group.leave()
             }
         }
@@ -714,14 +699,14 @@ extension Array where Element: SIMDScalar & FloatingPoint {
         
         group.wait()
         
-        return sumVector.sum() + tailSum
+        return sumVector.wrappedSum() + tailSum
     }
     
-    var mean: Element {
-        return count == 0 ? 0 : sum / Element(count)
+    var mean: Double {
+        return count == 0 ? 0 : Double(sum) / Double(count)
     }
     
-    var variance: Element {
+    var variance: Double {
         
         if count == 0 { return 0 }
         
@@ -758,30 +743,18 @@ extension Array where Element: SIMDScalar & FloatingPoint {
             )
             
             syncQueue.async {
-                sumVector += value * value
+                sumVector &+= value &* value
                 group.leave()
             }
         }
         
         group.wait()
         
-        return (sumVector.sum() + tailSum) / Element(count) - sampleSum * sampleSum
-    }
-    
-    var std: Element {
-        return Foundation.sqrt(variance)
+        return Double(sumVector.wrappedSum() + tailSum) / Double(count) - sampleSum * sampleSum
     }
     
     var abs: [Element] {
         return map { $0 >= Element.zero ? $0 : -$0 }
     }
     
-    var sqrt: [Element] {
-        return .transform32(self, type: .squareRoot)
-    }
-    
-    var rounded: [Element] {
-        return .transform32(self, type: .round)
-    }
-
 }

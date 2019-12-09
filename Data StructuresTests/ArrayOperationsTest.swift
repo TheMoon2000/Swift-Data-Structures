@@ -27,15 +27,20 @@ class ArrayOperationsTest: XCTestCase {
         
         // Comparisons
         print("A > 0?: \(A > 0); A <= 1.2?: \(A <= 1.2); A == 4.0: \(A == 4.0)")
+        print("A > [0.0]: \(A > [0.0])")
         
         // Unaligned vector arithmetics
         let X = [7.875, 0.3, -0.4]
         print("A+X = \(A ++ X); A-X = \(A - X), X-A= \(X - A), X·A = \(X * A)")
         
+        // Integers
+        let I = [-3, 5, 9, -2, 17]
+        print("I x 2: \(I * 2), I + 2: \(I + 2), I / 2: \(I / 2), I - 2: \(I - 2)")
+        print("I << 2: \(I << 2), I >> 2: \(I >> 2)")
     }
     
     func testIntScalarAddition() {
-        let randomInts = (0..<(1 << 8)).map { _ in Int.random(in: -100...100) }
+        let randomInts = (0..<(1 << 20)).map { _ in Int.random(in: -100...100) }
         let constant = 10
         
         let vanillaStart = Date.timeIntervalSinceReferenceDate
