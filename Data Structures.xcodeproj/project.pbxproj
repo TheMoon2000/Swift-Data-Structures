@@ -63,6 +63,8 @@
 		CC493DD1239D004100C65D8E /* ArrayOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOperations.swift; sourceTree = "<group>"; };
 		CC493DD3239D84B200C65D8E /* ArrayOperationsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOperationsTest.swift; sourceTree = "<group>"; };
 		CC493DD5239DD01500C65D8E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		CC493DD7239DDE9C00C65D8E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = "/Users/jiaruishan/Desktop/Projects/Data Structures/README.md"; sourceTree = "<absolute>"; };
+		CC493DD8239DDE9E00C65D8E /* Screenshots */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Screenshots; path = "/Users/jiaruishan/Desktop/Projects/Data Structures/Screenshots"; sourceTree = "<absolute>"; };
 		E24D295067EAC6279D6F5441 /* Pods-Data Structures.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Data Structures.debug.xcconfig"; path = "Target Support Files/Pods-Data Structures/Pods-Data Structures.debug.xcconfig"; sourceTree = "<group>"; };
 		E64D295755C1AA11FB218302 /* Pods-Data Structures-Data StructuresTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Data Structures-Data StructuresTests.debug.xcconfig"; path = "Target Support Files/Pods-Data Structures-Data StructuresTests/Pods-Data Structures-Data StructuresTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +113,8 @@
 		CC168E412382812300030731 = {
 			isa = PBXGroup;
 			children = (
+				CC493DD7239DDE9C00C65D8E /* README.md */,
+				CC493DD8239DDE9E00C65D8E /* Screenshots */,
 				CC168E4D2382812300030731 /* Data Structures */,
 				CC168E582382812300030731 /* Data StructuresTests */,
 				CC168E4C2382812300030731 /* Products */,
