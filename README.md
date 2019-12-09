@@ -13,10 +13,10 @@ This category of improvements are extensions to the existing Swift arrays. Many 
     print(A.variance, A.std) // 5.3825 2.3200215516240363
   ```
 
-  Here is a performance comparison: <br />
-  <img src="Screenshots/DoubleArrayPerformance.jpg" width="100%" />
-
-  <img src="Screenshots/DoubleArraySpeedup.jpg" width="400px" />
+By using SIMD vector operations and thread-level parallism, my 2-core computer was able to get a roughly 2x speedup from Swift's map function for this particular operation. Here is a performance comparison: <br />
+  
+  <img src="Screenshots/DoubleArrayPerformance.jpg" width="90%" />
+  <img src="Screenshots/DoubleArraySpeedup.jpg" width="90%" />
 
 ### Numeric Data structures
 - Complex numbers (`Complex`)
