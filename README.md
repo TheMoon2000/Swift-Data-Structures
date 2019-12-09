@@ -1,4 +1,4 @@
-# Swift-Data-Structures
+# Data Structures for Swift
 This project aims to provide a variety of enhancements (both features and performance) to the existing data structures in Swift. Thep purpose of these improvements is to let Swift become more powerful in computations.
 
 ### Array Operations
@@ -7,16 +7,23 @@ This category of improvements are extensions to the existing Swift arrays. Many 
 - Scalar multiplication
 
   ```swift
+    /* Floating point types */
     let A = [0.3, -2.5, 4.0, 1.2] // Create a Double array
     print(A * 2, A + 2) // [0.6, -5.0, 8.0, 2.4] [2.3, -0.5, 6.0, 3.2]
     print(A.sum, A.mean) // 3.0 0.75
     print(A.variance, A.std) // 5.3825 2.3200215516240363
+    
+    /* Integer types */
+    
+    
   ```
 
-By using SIMD vector operations and thread-level parallism, my 2-core computer was able to get a roughly 2x speedup from Swift's map function for this particular operation. Here is a performance comparison: <br />
+By using SIMD vector operations and thread-level parallism, my 2-core computer was able to get a roughly 2x speedup from Swift's native map function for this particular operation. Here is a performance comparison: <br />
   
   <img src="Screenshots/DoubleArrayPerformance.jpg" width="90%" />
   <img src="Screenshots/DoubleArraySpeedup.jpg" width="90%" />
+  
+  Eventually I chose to use vectors of size 32 because it yields the best asymptotic performance from my experiments. I also used this vector size for the other array operations.
 
 ### Numeric Data structures
 - Complex numbers (`Complex`)
