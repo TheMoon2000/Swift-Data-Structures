@@ -18,64 +18,28 @@ class ArrayOperationsTest: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    func testSimple() {
+        let A: [Double] = [0.3, -2.5, 4.0, 1.2]
+        print(A * 2, A + 2)
+        print(A.sum, A.mean, A.variance, A.std)
+    }
 
-    func testDoubleScalarMultiplicationPerformance() {
-        let randomDoubles = (0..<(1 << 10)).map { _ in Double.random(in: -100...100) }
+    func testDoubleScalarMultiplication() {
+        let randomDoubles = (0..<(1 << 20)).map { _ in Double.random(in: -100...100) }
         let constant = 2.3
-        let iterations = 1
         
-        print("Average time of multiplying double array of size \(randomDoubles.count) by a constant factor: ")
+        let vanillaStart = Date.timeIntervalSinceReferenceDate
+        let mapResult = randomDoubles.map { $0 * constant }
+        let vanillaEnd = Date.timeIntervalSinceReferenceDate
+        print("Swift map scaling with \(randomDoubles.count) items: \(vanillaEnd - vanillaStart)s")
         
-        var vanillaTotal = 0.0
-        for _ in 0..<iterations {
-            let start = Date.timeIntervalSinceReferenceDate
-            var vanillaResult = [Double]()
-            for double in randomDoubles {
-                vanillaResult.append(double * constant)
-            }
-            let end = Date.timeIntervalSinceReferenceDate
-            vanillaTotal += end - start
-        }
-        print("Vanilla constant scaling with \(randomDoubles.count) items: \(vanillaTotal / Double(iterations))s")
-        
-        var simd8Total = 0.0
-        for _ in 0..<iterations {
-            let start = Date.timeIntervalSinceReferenceDate
-            let _ = [Double].multiply(lhs: constant, rhs: randomDoubles)
-            let end = Date.timeIntervalSinceReferenceDate
-            simd8Total += end - start
-        }
-        print("SIMD constant scaling (8) with \(randomDoubles.count) items: \(simd8Total / Double(iterations))s")
-        
-        var simd16Total = 0.0
-        for _ in 0..<iterations {
-            let start = Date.timeIntervalSinceReferenceDate
-            let _ = [Double].multiply(lhs: constant, rhs: randomDoubles, vectorSize: 16)
-            let end = Date.timeIntervalSinceReferenceDate
-            simd16Total += end - start
-        }
-        print("SIMD constant scaling (16) with \(randomDoubles.count) items: \(simd16Total / Double(iterations))s")
-        
-        var simd32Total = 0.0
-        for _ in 0..<iterations {
-            let start = Date.timeIntervalSinceReferenceDate
-            let _ = [Double].multiply(lhs: constant, rhs: randomDoubles, vectorSize: 32)
-            simd32Total += Date.timeIntervalSinceReferenceDate - start
-        }
-        print("SIMD constant scaling (32) with \(randomDoubles.count) items: \(simd32Total / Double(iterations))s")
-        
-        var mapTotal = 0.0
-        for _ in 0..<iterations {
-            let start = Date.timeIntervalSinceReferenceDate
-            let _ = randomDoubles.map { $0 * constant }
-            mapTotal += Date.timeIntervalSinceReferenceDate - start
-        }
-        
-        print("Map constant scaling with \(randomDoubles.count) items: \(mapTotal / Double(iterations))s")
-        
-        // XCTAssertEqual(vanillaResult, simdResult)
-        // XCTAssertEqual(vanillaResult, simd16Result)
-        // XCTAssertEqual(vanillaResult, simd32Result)
+        let simdStart = Date.timeIntervalSinceReferenceDate
+        let simdResult = constant * randomDoubles
+        let simdEnd = Date.timeIntervalSinceReferenceDate
+        print("SIMD constant scaling (32) with \(randomDoubles.count) items: \(simdEnd - simdStart)s")
+                
+         XCTAssertEqual(mapResult, simdResult)
     }
     
     func testDoubleSum() {
