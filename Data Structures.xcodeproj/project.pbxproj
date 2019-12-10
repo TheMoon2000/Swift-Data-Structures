@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2CB0865B36DD3AB687822C66 /* Pods_Data_Structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526EC96806F6B87B78DFC11D /* Pods_Data_Structures.framework */; };
-		CC00D873239E59AB007B997E /* FloatingPointArrayOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00D867239E0893007B997E /* FloatingPointArrayOps.swift */; };
+		CC01042023A05C4500B0CE8B /* DoubleArrayOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DD1239D004100C65D8E /* DoubleArrayOperations.swift */; };
+		CC01042123A05C7C00B0CE8B /* FloatingPointArrayOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00D867239E0893007B997E /* FloatingPointArrayOps.swift */; };
 		CC168E552382812300030731 /* Data_Structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC168E4B2382812300030731 /* Data_Structures.framework */; };
 		CC168E5A2382812300030731 /* QueueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC168E592382812300030731 /* QueueTest.swift */; };
 		CC168E5C2382812300030731 /* Data_Structures.h in Headers */ = {isa = PBXBuildFile; fileRef = CC168E4E2382812300030731 /* Data_Structures.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -340,6 +341,7 @@
 				CC493DC4239CE76400C65D8E /* Cardinality.swift in Sources */,
 				CC5324E2239E627300E95378 /* IntegerArrayOperations.swift in Sources */,
 				CC493DCA239CEC0B00C65D8E /* Complex.swift in Sources */,
+				CC01042023A05C4500B0CE8B /* DoubleArrayOperations.swift in Sources */,
 				CC493DBC239CE46F00C65D8E /* Monoid.swift in Sources */,
 				CC493DC2239CE6BB00C65D8E /* Field.swift in Sources */,
 				CC493DC6239CE94300C65D8E /* Extensions.swift in Sources */,
@@ -348,7 +350,7 @@
 				CC493DD0239CFA3600C65D8E /* Rational.swift in Sources */,
 				CC493DBA239CE12D00C65D8E /* Semigroup.swift in Sources */,
 				CC493DBE239CE50B00C65D8E /* Group.swift in Sources */,
-				CC00D873239E59AB007B997E /* FloatingPointArrayOps.swift in Sources */,
+				CC01042123A05C7C00B0CE8B /* FloatingPointArrayOps.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

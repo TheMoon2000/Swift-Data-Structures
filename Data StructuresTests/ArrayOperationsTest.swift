@@ -28,6 +28,11 @@ class ArrayOperationsTest: XCTestCase {
         // Comparisons
         print("A > 0?: \(A > 0); A <= 1.2?: \(A <= 1.2); A == 4.0: \(A == 4.0)")
         print("A > [0.0]: \(A > [0.0])")
+        print([0.0, -3.0, 5.0, 2.0] >= A)
+        
+        // Vector arithmetics:
+        let B = [1.0, 2.0, 3.0, 4.0]
+        print("A • B: \(A * B), A + B: \(A ++ B)")
         
         // Unaligned vector arithmetics
         let X = [7.875, 0.3, -0.4]
@@ -447,10 +452,9 @@ class ArrayOperationsTest: XCTestCase {
         let reduceEnd = Date.timeIntervalSinceReferenceDate
         print("Vanilla variance: \(reduceEnd - reduceStart)s")
         
-        let simdStart = Date.timeIntervalSinceReferenceDate
         let simdVariance = randomDoubles.variance
-        let simdEnd = Date.timeIntervalSinceReferenceDate
-        print("SIMD variance: \(simdEnd - simdStart)")
+        
+        self.measure { randomDoubles.variance }
         
         XCTAssertEqual(manualVariance, simdVariance, accuracy: 0.999)
     }
@@ -468,12 +472,73 @@ class ArrayOperationsTest: XCTestCase {
         let reduceEnd = Date.timeIntervalSinceReferenceDate
         print("Vanilla variance: \(reduceEnd - reduceStart)s")
         
-        let simdStart = Date.timeIntervalSinceReferenceDate
         let simdVariance = randomFloats.variance
-        let simdEnd = Date.timeIntervalSinceReferenceDate
-        print("SIMD variance: \(simdEnd - simdStart)")
+        
+        print("SIMD Measurement:")
+        self.measure { randomFloats.variance }
         
         XCTAssertEqual(manualVariance, simdVariance, accuracy: 0.999)
     }
 
+    func testDoubleDiff() {
+        let randomDoubles = (0..<(1 << 20 + 31)).map { _ in Double.random(in: -100...100) }
+        
+        let vanillaStart = Date.timeIntervalSinceReferenceDate
+        var vanillaResult = [Double]()
+        for i in 0..<(randomDoubles.count - 1) {
+            vanillaResult.append(randomDoubles[i + 1] - randomDoubles[i])
+        }
+        let vanillaEnd = Date.timeIntervalSinceReferenceDate
+        print("Vanilla difference: \(vanillaEnd - vanillaStart)s")
+        
+        let simdStart = Date.timeIntervalSinceReferenceDate
+        let simdResult = randomDoubles.diff()
+        let simdEnd = Date.timeIntervalSinceReferenceDate
+        print("SIMD reduce: \(simdEnd - simdStart)")
+        
+        XCTAssertEqual(vanillaResult, simdResult)
+    }
+    
+    func testFloatDiff() {
+        let randomFloats = (0..<(1 << 20 + 31)).map { _ in Float.random(in: -100...100) }
+        
+        let vanillaStart = Date.timeIntervalSinceReferenceDate
+        var vanillaResult = [Float]()
+        for i in 0..<(randomFloats.count - 1) {
+            vanillaResult.append(randomFloats[i + 1] - randomFloats[i])
+        }
+        let vanillaEnd = Date.timeIntervalSinceReferenceDate
+        print("Vanilla difference: \(vanillaEnd - vanillaStart)s")
+        
+        let simdStart = Date.timeIntervalSinceReferenceDate
+        let simdResult = randomFloats.diff()
+        let simdEnd = Date.timeIntervalSinceReferenceDate
+        print("SIMD reduce: \(simdEnd - simdStart)")
+        
+        self.measure { randomFloats.diff() }
+        
+        XCTAssertEqual(vanillaResult, simdResult)
+    }
+    
+    func testIntDiff() {
+        let randomInts = (0..<(1 << 20)).map { _ in Int.random(in: -100...100) }
+        
+        let vanillaStart = Date.timeIntervalSinceReferenceDate
+        var vanillaResult = [Int]()
+        for i in 0..<(randomInts.count - 1) {
+            vanillaResult.append(randomInts[i + 1] - randomInts[i])
+        }
+        let vanillaEnd = Date.timeIntervalSinceReferenceDate
+        print("Vanilla difference: \(vanillaEnd - vanillaStart)s")
+        
+        let simdResult = randomInts.diff()
+        
+        print("SIMD Measurement: ")
+        self.measure {
+            let simdResult = randomInts.diff()
+        }
+        
+        XCTAssertEqual(vanillaResult, simdResult)
+        
+    }
 }

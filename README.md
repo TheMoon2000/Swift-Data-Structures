@@ -4,7 +4,7 @@ This project aims to provide a variety of enhancements (both features and perfor
 ### Array Operations
 This category of improvements are extensions to the existing Swift arrays. Many of these are inspired by the NumPy library for python.
 
-- Scalar multiplication
+- Example computations
 
   ```swift
     /* Floating point types */
@@ -17,13 +17,17 @@ This category of improvements are extensions to the existing Swift arrays. Many 
     print(A.abs, A.sqrt) // [0.3, 2.5, 4.0, 1.2] [0.5477..., -nan, 2.0, 1.0954...]
     
     // Vector arithmetics
-    
+    let B = [1.0, 2.0, 3.0, 4.0] // Create another double array
+    let C = [4.0, 2.0] // Will be used as an example of unaligned vector operations
+    print(A • B, A * B) // Two equivalent ways to compute the dot product [0.3, -5.0, 12.0, 4.8]
+    print(A + B) // [1.3, -0.5, 7.0, 5.2]
     
     // Comparisons
     print(A <= 1.2, A == 4.0) // [true, true, false, true] [false, false, true, false]
     
-    // Note: Unaligned vector comparisons are supported. They will be aligned from index 0, and the unaligned portion will always return 0.0.
+    // Note: Unaligned vector comparisons are supported. They will be aligned from index 0, and the unaligned portion will always return `false`.
     print(A > [0.5, 0.5, 0.8]) // [false, false, true, false]
+    print([0.0, -3.0, 5.0, 2.0] <= A) // [true, true, false, false]
     
     /* Integer types */
     let I: [Int] = [-3, 5, 9, -2, 17] // Create an Int array

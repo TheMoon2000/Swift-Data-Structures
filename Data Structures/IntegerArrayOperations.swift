@@ -8,6 +8,9 @@
 
 import Foundation
 
+infix operator ++
+infix operator •
+
 extension Array where Element: SIMDScalar & FixedWidthInteger & SignedInteger {
     
     enum IntegerArithmeticType: Int {
@@ -755,6 +758,110 @@ extension Array where Element: SIMDScalar & FixedWidthInteger & SignedInteger {
     
     var abs: [Element] {
         return map { $0 >= Element.zero ? $0 : -$0 }
+    }
+    
+    
+    // Computes the difference between adjacent elements, and outputs the result as an array of the same type.
+    
+    @discardableResult
+    func diff() -> [Element] {
+        if count < 2 {
+            return self
+        }
+        
+        let cut = (count - 1) / 32 * 32
+        var new = Array<Element>(repeating: Element.zero, count: count - 1)
+        
+        let syncQueue = DispatchQueue(label: "sync")
+        let group = DispatchGroup()
+        
+        DispatchQueue.concurrentPerform(iterations: cut / 32) { rawIndex in
+            group.enter()
+            let index = rawIndex * 32
+            let vec1 = SIMD32<Element>(
+                self[index], self[index+1], self[index+2], self[index+3],
+                self[index+4], self[index+5], self[index+6], self[index+7],
+                self[index+8], self[index+9], self[index+10], self[index+11],
+                self[index+12], self[index+13], self[index+14], self[index+15],
+                self[index+16], self[index+17], self[index+18], self[index+19],
+                self[index+20], self[index+21], self[index+22], self[index+23],
+                self[index+24], self[index+25], self[index+26], self[index+27],
+                self[index+28], self[index+29], self[index+30], self[index+31]
+            )
+            let vec2 = SIMD32<Element>(
+                self[index+1], self[index+2], self[index+3], self[index+4],
+                self[index+5], self[index+6], self[index+7], self[index+8],
+                self[index+9], self[index+10], self[index+11], self[index+12],
+                self[index+13], self[index+14], self[index+15], self[index+16],
+                self[index+17], self[index+18], self[index+19], self[index+20],
+                self[index+21], self[index+22], self[index+23], self[index+24],
+                self[index+25], self[index+26], self[index+27], self[index+28],
+                self[index+29], self[index+30], self[index+31], self[index+32]
+            )
+            
+            // Select the correct arithemetic operation
+            let value = vec2 &- vec1
+            syncQueue.async {
+                new[index] = value[0]
+                new[index + 1] = value[1]
+                new[index + 2] = value[2]
+                new[index + 3] = value[3]
+                new[index + 4] = value[4]
+                new[index + 5] = value[5]
+                new[index + 6] = value[6]
+                new[index + 7] = value[7]
+                new[index + 8] = value[8]
+                new[index + 9] = value[9]
+                new[index + 10] = value[10]
+                new[index + 11] = value[11]
+                new[index + 12] = value[12]
+                new[index + 13] = value[13]
+                new[index + 14] = value[14]
+                new[index + 15] = value[15]
+                new[index + 16] = value[16]
+                new[index + 17] = value[17]
+                new[index + 18] = value[18]
+                new[index + 19] = value[19]
+                new[index + 20] = value[20]
+                new[index + 21] = value[21]
+                new[index + 22] = value[22]
+                new[index + 23] = value[23]
+                new[index + 24] = value[24]
+                new[index + 25] = value[25]
+                new[index + 26] = value[26]
+                new[index + 27] = value[27]
+                new[index + 28] = value[28]
+                new[index + 29] = value[29]
+                new[index + 30] = value[30]
+                new[index + 31] = value[31]
+                group.leave()
+            }
+        }
+        
+        /*
+        DispatchQueue.concurrentPerform(iterations: self.count - 1 - cut) { index in
+            group.enter()
+            let d = self[cut + index + 1] - self[cut + index]
+            syncQueue.async {
+                new[cut + index] = d
+                group.leave()
+            }
+        }*/
+        
+        
+        group.enter()
+        syncQueue.async {
+            for i in cut..<(self.count - 1) {
+                new[i] = self[i + 1] - self[i]
+            }
+                        
+            group.leave()
+        }
+        
+        
+        group.wait()
+                
+        return new
     }
     
 }
