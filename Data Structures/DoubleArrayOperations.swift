@@ -75,8 +75,12 @@ extension Array where Element == Double {
         if lhs.count < cutoff {
             return lhs.map { $0 / rhs }
         } else {
-            return transform16(lhs, type: .division, constant: rhs)
+            return transform32(lhs, type: .division, constant: rhs)
         }
+    }
+    
+    static func / (lhs: [Double], rhs: [Double]) -> [Double] {
+        return transform32(lhs, rhs, type: .division)
     }
     
     static func /= (lhs: inout [Double], rhs: Double) {
@@ -401,8 +405,9 @@ extension Array where Element == Double {
         return new
     }
     
-    var sum: Double {
-        var sumVector = SIMD32<Double>()
+    /// Computes the sum of the array.
+    func sum() -> Double {
+        var concurrentSum = SIMD2<Double>()
         var tailSum = 0.0
         
         let cut = self.count / 32 * 32
@@ -413,7 +418,7 @@ extension Array where Element == Double {
         DispatchQueue.concurrentPerform(iterations: cut / 32) { rawIndex in
             group.enter()
             let index = rawIndex * 32
-            let slice = SIMD32<Double>(
+            let v32 = SIMD32<Double>(
                 self[index], self[index+1], self[index+2], self[index+3],
                 self[index+4], self[index+5], self[index+6], self[index+7],
                 self[index+8], self[index+9], self[index+10], self[index+11],
@@ -423,28 +428,28 @@ extension Array where Element == Double {
                 self[index+24], self[index+25], self[index+26], self[index+27],
                 self[index+28], self[index+29], self[index+30], self[index+31]
             )
+            let v16 = v32.oddHalf + v32.evenHalf
+            let v8 = v16.oddHalf + v16.evenHalf
+            let v4 = v8.oddHalf + v8.evenHalf
+            let v2 = v4.oddHalf + v4.evenHalf
             
             syncQueue.async {
-                sumVector += slice
+                concurrentSum += v2
                 group.leave()
             }
         }
         
-        group.enter()
-        syncQueue.async {
-            for i in cut..<self.count {
-                tailSum += self[i]
-            }
-            group.leave()
+        for i in cut..<count {
+            tailSum += self[i]
         }
         
         group.wait()
         
-        return sumVector.sum() + tailSum
+        return concurrentSum.x + concurrentSum.y + tailSum
     }
     
     var mean: Double {
-        return count == 0 ? 0 : sum / Double(count)
+        return count == 0 ? 0 : sum() / Double(count)
     }
     
     var variance: Double {
@@ -618,5 +623,54 @@ extension Array where Element == Double {
         return new
     }
     
+    func prod() -> Double {
+        if count == 0 {
+            return 1.0
+        }
+            
+        var product = SIMD2<Double>(repeating: 1.0)
+        let cut = count / 32 * 32
+        
+        let syncQueue = DispatchQueue(label: "sync")
+        let group = DispatchGroup()
+        
+        DispatchQueue.concurrentPerform(iterations: cut / 32) { rawIndex in
+            if product.x == 0 || product.y == 0 { return }
+            group.enter()
+            let index = rawIndex * 32
+            let v32 = SIMD32<Double>(
+                self[index], self[index+1], self[index+2], self[index+3],
+                self[index+4], self[index+5], self[index+6], self[index+7],
+                self[index+8], self[index+9], self[index+10], self[index+11],
+                self[index+12], self[index+13], self[index+14], self[index+15],
+                self[index+16], self[index+17], self[index+18], self[index+19],
+                self[index+20], self[index+21], self[index+22], self[index+23],
+                self[index+24], self[index+25], self[index+26], self[index+27],
+                self[index+28], self[index+29], self[index+30], self[index+31]
+            )
+            let v16 = v32.oddHalf * v32.evenHalf
+            let v8 = v16.oddHalf * v16.evenHalf
+            let v4 = v8.oddHalf * v8.evenHalf
+            let v2 = v4.oddHalf * v4.evenHalf
+            
+            syncQueue.async {
+                product *= v2
+                group.leave()
+            }
+        }
+        
+        if product.x == 0 || product.y == 0 { return 0.0 }
+        
+        var tailProduct = 1.0
+        for i in cut..<count {
+            tailProduct *= self[i]
+        }
+        
+        
+        group.wait()
+        
+        return product.x * product.y * tailProduct
+    }
+
     
 }

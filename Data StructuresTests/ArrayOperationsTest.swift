@@ -22,8 +22,9 @@ class ArrayOperationsTest: XCTestCase {
     func testSimple() {
         let A: [Double] = [0.3, -2.5, 4.0, 1.2]
         print("A x 2 = \(A * 2); A + 2 = \(A + 2), A / 2 = \(A / 2), A - 2 = \(A - 2)")
-        print("A.sum = \(A.sum); A.mean = \(A.mean), A.variance = \(A.variance), A.std = \(A.std)")
+        print("A.sum = \(A.sum()); A.mean = \(A.mean), A.variance = \(A.variance), A.std = \(A.std)")
         print("A.abs = \(A.abs); A.sqrt = \(A.squareRoot)")
+        print(A.diff())
         
         // Comparisons
         print("A > 0?: \(A > 0); A <= 1.2?: \(A <= 1.2); A == 4.0: \(A == 4.0)")
@@ -32,7 +33,10 @@ class ArrayOperationsTest: XCTestCase {
         
         // Vector arithmetics:
         let B = [1.0, 2.0, 3.0, 4.0]
-        print("A • B: \(A * B), A + B: \(A ++ B)")
+        let C = [4.0, 2.0]
+        print("A • B: \(A * B), A + B: \(A ++ B), A - B: \(A - B)")
+        print("A + C: \(A ++ C), A - C: \(A - C)")
+        print("A * C: \(A * C), A / C: \(A / C)")
         
         // Unaligned vector arithmetics
         let X = [7.875, 0.3, -0.4]
@@ -42,6 +46,7 @@ class ArrayOperationsTest: XCTestCase {
         let I = [-3, 5, 9, -2, 17]
         print("I x 2: \(I * 2), I + 2: \(I + 2), I / 2: \(I / 2), I - 2: \(I - 2)")
         print("I << 2: \(I << 2), I >> 2: \(I >> 2)")
+        print("I.diff(): \(I.diff())")
     }
     
     func testIntScalarAddition() {
@@ -188,14 +193,14 @@ class ArrayOperationsTest: XCTestCase {
     }
     
     func testDoubleVectorAddition() {
-        let randomDoubles1 = (0..<100000).map { _ in Double.random(in: -100...100) }
-        let randomDoubles2 = (0..<100000).map { _ in Double.random(in: -100...100) }
+        let randomDoubles1 = (0..<(1 << 23)).map { _ in Double.random(in: -100...100) }
+        let randomDoubles2 = (0..<(1 << 23)).map { _ in Double.random(in: -100...100) }
         
         let vanillaStart = Date.timeIntervalSinceReferenceDate
-        var vanillaResult = [Double]()
+        var vanillaResult = [Double](repeating: 0.0, count: randomDoubles1.count)
         
         for i in 0..<randomDoubles1.count {
-            vanillaResult.append(randomDoubles1[i] + randomDoubles2[i])
+            vanillaResult[i] = randomDoubles1[i] + randomDoubles2[i]
         }
         
         let vanillaEnd = Date.timeIntervalSinceReferenceDate
@@ -404,21 +409,25 @@ class ArrayOperationsTest: XCTestCase {
     }
     
     func testDoubleSum() {
-        let randomDoubles = (0..<(1 << 20)).map { _ in Double.random(in: -100...100) }
+        let randomDoubles = (0..<(1 << 24)).map { _ in Double.random(in: -100...100) }
         
         let reduceStart = Date.timeIntervalSinceReferenceDate
-        let manualSum: Double = randomDoubles.reduce(0, { result, next in
+        let manualSum: Double = randomDoubles.reduce(0.0, { result, next in
             return result + next
         })
         let reduceEnd = Date.timeIntervalSinceReferenceDate
-        print("Vanilla reduce: \(reduceEnd - reduceStart)s")
+        print("Vanilla reduce sum computation: \(reduceEnd - reduceStart)s")
         
         let simdStart = Date.timeIntervalSinceReferenceDate
-        let simdSum = randomDoubles.sum
+        let simdSum = randomDoubles.sum()
         let simdEnd = Date.timeIntervalSinceReferenceDate
-        print("SIMD reduce: \(simdEnd - simdStart)")
+        print("SIMD sum computation: \(simdEnd - simdStart)s")
+        /*
+        self.measure {
+            randomDoubles.sum()
+        }*/
         
-        XCTAssertEqual(manualSum, simdSum, accuracy: 0.99999)
+        XCTAssertEqual(manualSum, simdSum, accuracy: 0.0001)
     }
     
     func testDoubleArrayMean() {
@@ -456,7 +465,7 @@ class ArrayOperationsTest: XCTestCase {
         
         self.measure { randomDoubles.variance }
         
-        XCTAssertEqual(manualVariance, simdVariance, accuracy: 0.999)
+        XCTAssertEqual(manualVariance, simdVariance, accuracy: 0.99999)
     }
     
     func testFloatArrayVariance() {
@@ -529,16 +538,42 @@ class ArrayOperationsTest: XCTestCase {
             vanillaResult.append(randomInts[i + 1] - randomInts[i])
         }
         let vanillaEnd = Date.timeIntervalSinceReferenceDate
-        print("Vanilla difference: \(vanillaEnd - vanillaStart)s")
+        print("Vanilla difference with \(randomInts.count) items: \(vanillaEnd - vanillaStart)s")
         
         let simdResult = randomInts.diff()
         
-        print("SIMD Measurement: ")
+        print("SIMD Measurement with \(randomInts.count) items: ")
         self.measure {
-            let simdResult = randomInts.diff()
+            let _ = randomInts.diff()
         }
         
         XCTAssertEqual(vanillaResult, simdResult)
+    }
+    
+    func testDoubleProduct() {
+        let randomDoubles = (0..<(1 << 20)).map { _ in Double.random(in: -2...3) }
         
+        let vanillaStart = Date.timeIntervalSinceReferenceDate
+        let vanillaResult = randomDoubles.reduce(1.0, { result, next in
+            return result * next
+        })
+        let vanillaEnd = Date.timeIntervalSinceReferenceDate
+        print("Vanilla difference with \(randomDoubles.count) items: \(vanillaEnd - vanillaStart)s")
+        
+        let simdResult = randomDoubles.prod()
+        
+        print("SIMD Measurement for \(randomDoubles.count) items: ")
+        self.measure {
+            let _ = randomDoubles.prod()
+        }
+        
+        XCTAssertEqual(vanillaResult, simdResult, accuracy: 0.001)
+    }
+    
+    func testDoubleMedian() {
+        XCTAssertEqual(2.5, [1.0, 2.0, 3.0, 4.0].median)
+        XCTAssertEqual(1.0, [1.0].median)
+        XCTAssertEqual(0.0, [Double]().median)
+        XCTAssertEqual(0.0, [-1.0, 0.0, 1.0].median)
     }
 }

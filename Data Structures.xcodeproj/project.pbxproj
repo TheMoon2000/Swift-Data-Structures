@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2CB0865B36DD3AB687822C66 /* Pods_Data_Structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526EC96806F6B87B78DFC11D /* Pods_Data_Structures.framework */; };
-		CC01042023A05C4500B0CE8B /* DoubleArrayOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DD1239D004100C65D8E /* DoubleArrayOperations.swift */; };
 		CC01042123A05C7C00B0CE8B /* FloatingPointArrayOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00D867239E0893007B997E /* FloatingPointArrayOps.swift */; };
+		CC01042323A074E500B0CE8B /* MinHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01042223A074E500B0CE8B /* MinHeap.swift */; };
+		CC15381923A0FFAC001D8284 /* DoubleArrayOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC493DD1239D004100C65D8E /* DoubleArrayOperations.swift */; };
 		CC168E552382812300030731 /* Data_Structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC168E4B2382812300030731 /* Data_Structures.framework */; };
 		CC168E5A2382812300030731 /* QueueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC168E592382812300030731 /* QueueTest.swift */; };
 		CC168E5C2382812300030731 /* Data_Structures.h in Headers */ = {isa = PBXBuildFile; fileRef = CC168E4E2382812300030731 /* Data_Structures.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,6 +50,7 @@
 		87A5BFE3963DCF77B73D6C06 /* Pods-Data Structures.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Data Structures.debug.xcconfig"; path = "Target Support Files/Pods-Data Structures/Pods-Data Structures.debug.xcconfig"; sourceTree = "<group>"; };
 		CC00D867239E0893007B997E /* FloatingPointArrayOps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointArrayOps.swift; sourceTree = "<group>"; };
 		CC00D86B239E0E40007B997E /* IntegerArrayOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerArrayOperations.swift; sourceTree = "<group>"; };
+		CC01042223A074E500B0CE8B /* MinHeap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinHeap.swift; sourceTree = "<group>"; };
 		CC168E4B2382812300030731 /* Data_Structures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Data_Structures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC168E4E2382812300030731 /* Data_Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Data_Structures.h; sourceTree = "<group>"; };
 		CC168E4F2382812300030731 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				CC168E4E2382812300030731 /* Data_Structures.h */,
 				CC168E4F2382812300030731 /* Info.plist */,
 				CC168E652382816000030731 /* Queue.swift */,
+				CC01042223A074E500B0CE8B /* MinHeap.swift */,
 				CC493DD1239D004100C65D8E /* DoubleArrayOperations.swift */,
 				CC00D867239E0893007B997E /* FloatingPointArrayOps.swift */,
 				CC00D86B239E0E40007B997E /* IntegerArrayOperations.swift */,
@@ -341,9 +344,10 @@
 				CC493DC4239CE76400C65D8E /* Cardinality.swift in Sources */,
 				CC5324E2239E627300E95378 /* IntegerArrayOperations.swift in Sources */,
 				CC493DCA239CEC0B00C65D8E /* Complex.swift in Sources */,
-				CC01042023A05C4500B0CE8B /* DoubleArrayOperations.swift in Sources */,
 				CC493DBC239CE46F00C65D8E /* Monoid.swift in Sources */,
+				CC15381923A0FFAC001D8284 /* DoubleArrayOperations.swift in Sources */,
 				CC493DC2239CE6BB00C65D8E /* Field.swift in Sources */,
+				CC01042323A074E500B0CE8B /* MinHeap.swift in Sources */,
 				CC493DC6239CE94300C65D8E /* Extensions.swift in Sources */,
 				CC168E662382816000030731 /* Queue.swift in Sources */,
 				CC493DC0239CE5C300C65D8E /* Ring.swift in Sources */,

@@ -18,7 +18,7 @@ infix operator •
 /// This is the number of elements in the array when the algorithm switches from the default `map()` function in Swift to the custom array operations.
 let cutoff = 1 << 12
 
-extension Array where Element: SignedNumeric & SIMDScalar {
+extension Array where Element: SignedNumeric & SIMDScalar & AdditiveArithmetic {
     enum VectorArithmeticType: Int {
         case addition, subtraction, multiplication, division
     }
@@ -675,8 +675,9 @@ extension Array where Element: SIMDScalar & FloatingPoint {
         return new
     }
     
-    var sum: Element {
-        var sumVector = SIMD32<Element>()
+    /// Computes the sum of the array.
+    func sum() -> Element {
+        var concurrentSum = SIMD2<Element>()
         var tailSum = Element.zero
         
         let cut = self.count / 32 * 32
@@ -687,7 +688,7 @@ extension Array where Element: SIMDScalar & FloatingPoint {
         DispatchQueue.concurrentPerform(iterations: cut / 32) { rawIndex in
             group.enter()
             let index = rawIndex * 32
-            let slice = SIMD32<Element>(
+            let v32 = SIMD32<Element>(
                 self[index], self[index+1], self[index+2], self[index+3],
                 self[index+4], self[index+5], self[index+6], self[index+7],
                 self[index+8], self[index+9], self[index+10], self[index+11],
@@ -697,28 +698,28 @@ extension Array where Element: SIMDScalar & FloatingPoint {
                 self[index+24], self[index+25], self[index+26], self[index+27],
                 self[index+28], self[index+29], self[index+30], self[index+31]
             )
+            let v16 = v32.oddHalf + v32.evenHalf
+            let v8 = v16.oddHalf + v16.evenHalf
+            let v4 = v8.oddHalf + v8.evenHalf
+            let v2 = v4.oddHalf + v4.evenHalf
             
             syncQueue.async {
-                sumVector += slice
+                concurrentSum += v2
                 group.leave()
             }
         }
         
-        group.enter()
-        syncQueue.async {
-            for i in cut..<self.count {
-                tailSum += self[i]
-            }
-            group.leave()
+        for i in cut..<count {
+            tailSum += self[i]
         }
         
         group.wait()
         
-        return sumVector.sum() + tailSum
+        return concurrentSum.x + concurrentSum.y + tailSum
     }
     
     var mean: Element {
-        return count == 0 ? 0 : sum / Element(count)
+        return count == 0 ? 0 : sum() / Element(count)
     }
     
     var variance: Element {
@@ -887,5 +888,63 @@ extension Array where Element: SIMDScalar & FloatingPoint {
                 
         return new
     }
-
+    
+    func prod() -> Element {
+        if count == 0 {
+            return Element(1)
+        }
+            
+        var product = Element(1)
+        let cut = count / 32 * 32
+        
+        let syncQueue = DispatchQueue(label: "sync")
+        let group = DispatchGroup()
+        
+        DispatchQueue.concurrentPerform(iterations: cut / 32) { rawIndex in
+            if product == Element.zero { return }
+            group.enter()
+            let index = rawIndex * 32
+            let v32 = SIMD32<Element>(
+                self[index], self[index+1], self[index+2], self[index+3],
+                self[index+4], self[index+5], self[index+6], self[index+7],
+                self[index+8], self[index+9], self[index+10], self[index+11],
+                self[index+12], self[index+13], self[index+14], self[index+15],
+                self[index+16], self[index+17], self[index+18], self[index+19],
+                self[index+20], self[index+21], self[index+22], self[index+23],
+                self[index+24], self[index+25], self[index+26], self[index+27],
+                self[index+28], self[index+29], self[index+30], self[index+31]
+            )
+            let v16 = v32.oddHalf * v32.evenHalf
+            let v8 = v16.oddHalf * v16.evenHalf
+            let v4 = v8.oddHalf * v8.evenHalf
+            let v2 = v4.oddHalf * v4.evenHalf
+            let result = v2.x * v2.y
+            
+            syncQueue.async {
+                product *= result
+                group.leave()
+            }
+        }
+        
+        var tailProduct = Element(1)
+        for i in cut..<count {
+            tailProduct *= self[i]
+        }
+        
+        
+        group.wait()
+        
+        return product * tailProduct
+    }
+    
+    var median: Element {
+        if count == 0 {
+            return 0
+        } else {
+            let sorted = self.sorted()
+            let left = sorted[(count - 1) / 2]
+            let right = sorted[count / 2]
+            return (left + right) / 2
+        }
+    }
 }

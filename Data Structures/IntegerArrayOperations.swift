@@ -663,7 +663,7 @@ extension Array where Element: SIMDScalar & FixedWidthInteger & SignedInteger {
         return new
     }
     
-    var sum: Element {
+    func sum() -> Element {
         var sumVector = SIMD32<Element>()
         var tailSum = Element.zero
         
@@ -706,7 +706,7 @@ extension Array where Element: SIMDScalar & FixedWidthInteger & SignedInteger {
     }
     
     var mean: Double {
-        return count == 0 ? 0 : Double(sum) / Double(count)
+        return count == 0 ? 0 : Double(sum()) / Double(count)
     }
     
     var variance: Double {
